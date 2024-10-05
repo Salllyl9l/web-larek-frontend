@@ -1,21 +1,19 @@
-import { IOrder, IProduct, FormErrors, IOrderForm } from '../types';
+import { IOrder, IProduct, IProductWithSelected, FormErrors, IOrderForm, IAppState, CategoryType } from '../types';
 import { Model } from './base/Model';
-import { IAppState } from '../types';
 
-export class Product extends Model<IProduct> {
+export class Product extends Model<IProductWithSelected> {
   id: string;
   description: string;
   image: string;
   title: string;
-  category: string;
+  category: CategoryType;
   price: number | null;
   selected: boolean;
 }
 
 export class AppState extends Model<IAppState> {
-  basket: Product[] = [];
-
-  store: Product[];
+  basket: IProductWithSelected[] = [];
+  store: IProductWithSelected[] = [];
 
   order: IOrder = {
     items: [],
@@ -28,7 +26,7 @@ export class AppState extends Model<IAppState> {
 
   formErrors: FormErrors = {};
 
-  addToBasket(value: Product) {
+  addToBasket(value: IProductWithSelected) {
     this.basket.push(value);
   }
 
@@ -101,7 +99,7 @@ export class AppState extends Model<IAppState> {
   }
 
   setStore(items: IProduct[]) {
-    this.store = items.map((item) => new Product({ ...item, selected: false }, this.events));
+    this.store = items.map((item) => new Product({ ...item, selected: false, category: item.category as CategoryType }, this.events));
     this.emitChanges('items:changed', { store: this.store });
   }
 

@@ -1,5 +1,18 @@
 import { Product } from '../components/AppData';
 
+export interface IProduct {
+  id: string;
+  description: string;
+  image: string;
+  title: string;
+  category: CategoryType;
+  price: number | null;
+}
+
+export interface IProductWithSelected extends IProduct {
+  selected: boolean;
+}
+
 export type CategoryType =
   | 'другое'
   | 'софт-скил'
@@ -17,23 +30,13 @@ export interface ApiResponse {
   items: IProduct[];
 }
 
-export interface IProduct {
-  id: string;
-  description: string;
-  image: string;
-  title: string;
-  category: CategoryType;
-  price: number | null;
-  selected: boolean;
-}
-
 export interface IAppState {
-  basket: Product[];
-  store: Product[];
+  basket: IProductWithSelected[];
+  store: IProductWithSelected[];
   order: IOrder;
 
   formErrors: FormErrors;
-  addToBasket(value: Product): void;
+  addToBasket(value: IProductWithSelected): void;
   deleteFromBasket(id: string): void;
   clearBasket(): void;
   getBasketAmount(): number;
