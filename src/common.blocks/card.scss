@@ -62,19 +62,19 @@
     color: $primary;
 
     &_soft {
-      background-color: $category1;
+      background-color: $category1; // Софт-скил
     }
     &_hard {
-      background-color: $category5;
+      background-color: $category5; // Хард-скил
     }
     &_other {
-      background-color: $category2;
+      background-color: $category2; // Другое
     }
     &_additional {
-      background-color: $category3;
+      background-color: $category3; // Дополнительное
     }
     &_button {
-      background-color: $category4;
+      background-color: $category4; // Кнопка
     }
   }
   &__action {

@@ -138,10 +138,12 @@ events.on('basket:delete', (item: Product) => {
 
 // Оформить заказ
 events.on('basket:order', () => {
+  const storedAddress = localStorage.getItem('deliveryData');
+  const address = storedAddress ? JSON.parse(storedAddress) : ''; 
   modal.render({
     content: order.render(
       {
-        address: '',
+        address: address,
         valid: false,
         errors: []
       }
@@ -200,6 +202,8 @@ events.on('contacts:submit', () => {
 
 // Окно успешной покупки
 events.on('order:success', (res: ApiListResponse<string>) => {
+  // Сохраняем адрес доставки в localStorage
+  localStorage.setItem('deliveryData', JSON.stringify(appData.order.address)); 
   modal.render({
     content: success.render({
       description: res.total
